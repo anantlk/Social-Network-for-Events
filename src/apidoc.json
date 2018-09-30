@@ -1,0 +1,11 @@
+{
+    "name": "hooknotes API",
+    "version": "0.3.0",
+    "description": "API for the project",
+    "title": "hooknotes API",
+    "url" : "",
+    "template": {
+        "withCompare": true,
+        "withGenerator": true
+    }
+  }
