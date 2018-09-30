@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const index = require("./routes/index");
 const env = require("dotenv").config();
-const user = require("./routes/user");
 const admin = require("./routes/admin");
 const app = express();
 const flash = require("connect-flash");
@@ -42,8 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use("/api/", index);
-app.use("/api/user", user);
+app.use("/api", index);
 app.use("/api/admin", admin);
 
 // catch 404 and forward to error handler
