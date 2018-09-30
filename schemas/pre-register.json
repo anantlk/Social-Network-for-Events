@@ -1,0 +1,13 @@
+{
+  "id": "/PreRegister",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "Boolean", "required": true },
+    "message": { "type": "String", "required": true },
+    "verfied": {
+      "type": "Boolean",
+      "required": true
+    }
+  }
+}

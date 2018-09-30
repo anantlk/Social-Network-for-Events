@@ -1,0 +1,54 @@
+{
+  "name": "src",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./src/bin/www",
+    "test": "mocha"
+  },
+  "apidoc": {
+    "name": "Sappa Social App",
+    "version": "1.0.0",
+    "title": "Sappa API",
+    "url": "https://sappa-app.herokuapp.com"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
+    "apidoc": "^0.17.6",
+    "authy": "^1.4.0",
+    "authy-client": "^1.1.1",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "chai": "^4.1.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "http-errors": "^1.7.0",
+    "jsonschema": "^1.2.4",
+    "jsonwebtoken": "^8.3.0",
+    "mocha": "^5.2.0",
+    "mongoose": "^5.2.8",
+    "morgan": "^1.9.0",
+    "nodemailer": "^4.6.8",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "path": "^0.12.7",
+    "rand-token": "^0.4.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "supertest": "^3.1.0",
+    "twilio": "^3.19.2",
+    "util": "^0.11.0",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "grunt-apidoc": "^0.11.0",
+    "jsdoc": "^3.5.5",
+    "nodemon": "^1.18.3",
+    "npm-install-all": "^1.1.21"
+  }
+}

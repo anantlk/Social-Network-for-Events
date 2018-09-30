@@ -1,0 +1,5 @@
+- [Security E-Book](https://developer.okta.com/books/api-security/foreword/)
+- [Refresh Tokens](https://solidgeargroup.com/refresh-token-with-jwt-authentication-node-js)
+- [APIDocs](https://github.com/apidoc/apidoc)
+- [HTTP Codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
+- [Reset Password](https://www.smashingmagazine.com/2017/11/safe-password-resets-with-json-web-tokens/)
