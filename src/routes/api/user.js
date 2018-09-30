@@ -1,9 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var path = require("path");
-var isLoggedIn = require("../utilities/authenticate");
-var User = require(path.join(__dirname, "..", "models", "user"));
-var errorHandler = require("../utilities/handleError");
+var isLoggedIn = require("../../utilities/authenticate");
+var User = require("../../models/user");
 
 router.use(isLoggedIn);
 

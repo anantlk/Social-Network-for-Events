@@ -1,7 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var path = require("path");
-var errHanlder = require("../utilities/handleError");
 
 /**
  * @api {get} /api/admin Admin View
