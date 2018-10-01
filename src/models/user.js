@@ -15,7 +15,8 @@ var userSchema = new mongoose.Schema({
     type: String
   },
   description: {
-    type: String
+    type: String,
+    default: ""
   },
   password: {
     type: String
@@ -23,10 +24,11 @@ var userSchema = new mongoose.Schema({
   gender: {
     type: String,
     enum: ["Male", "Female", "Others", null],
-    default: null
+    default: ""
   },
   phone: {
-    type: String
+    type: String,
+    default: ""
   },
   photo: String,
   role: {
@@ -35,12 +37,13 @@ var userSchema = new mongoose.Schema({
     default: "student"
   },
   domain: {
-    type: String
+    type: String,
+    default: ""
   },
   skills: [],
   preferences: {
     type: String,
-    default: null
+    default: ""
   }
 });
 

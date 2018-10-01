@@ -9,7 +9,7 @@ const env = require("dotenv").config();
 const admin = require("./routes/api/admin");
 const app = express();
 const flash = require("connect-flash");
-const session = require("cookie-session");
+const session = require("express-session");
 const mongoose = require("mongoose");
 
 app.use(logger("dev"));
@@ -35,11 +35,12 @@ mongoose
     console.log("Connection failed");
   });
 
-require("./config/passport")(passport);
 app.use(session({ secret: "IWP events portal" }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+require("./config/passport")(passport);
 
 app.use("/api", index);
 app.use("/api/admin", admin);

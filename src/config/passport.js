@@ -7,6 +7,7 @@ module.exports = passport => {
     console.log("In serialize");
     done(null, user.id);
   });
+
   passport.deserializeUser((id, done) => {
     console.log("In deserialize");
     User.findById(id, (err, user) => {

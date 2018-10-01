@@ -2,10 +2,12 @@ const mongoose = require("mongoose");
 
 const organiserSchema = new mongoose.Schema({
   name: {
-    type: String
+    type: String,
+    default: ""
   },
   photo: {
-    type: String
+    type: String,
+    deafult: ""
   }
 });
 
@@ -15,35 +17,40 @@ const eventSchema = new mongoose.Schema({
     ref: "user"
   },
   eventName: {
-    type: String
+    type: String,
+    default: ""
   },
   category: {
-    type: String
+    type: String,
+    default: ""
   },
   organiser: organiserSchema,
   price: {
-    type: Number
+    type: Number,
+    default: ""
   },
   tagLine: {
-    type: String
-  },
-  likes: {
-    type: Number
+    type: String,
+    default: ""
   },
   description: {
-    type: String
+    type: String,
+    default: ""
   },
   eventDate: {
     type: Date
   },
   venue: {
-    type: String
+    type: String,
+    default: ""
   },
   registerCount: {
-    type: Number
+    type: Number,
+    default: 0
   },
   popularity: {
-    type: Number
+    type: Number,
+    default: 5
   },
   registeredUsers: [
     {
