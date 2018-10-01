@@ -25,11 +25,22 @@ var userSchema = new mongoose.Schema({
     enum: ["Male", "Female", "Others", null],
     default: null
   },
+  phone: {
+    type: String
+  },
   photo: String,
   role: {
     type: String,
     enum: ["student", "chapter", "admin"],
     default: "student"
+  },
+  domain: {
+    type: String
+  },
+  skills: [],
+  preferences: {
+    type: String,
+    default: null
   }
 });
 
