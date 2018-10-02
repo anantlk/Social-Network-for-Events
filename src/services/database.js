@@ -84,14 +84,14 @@ module.exports.addPost = async (post, orgId) => {
 
 module.exports.viewPost = async () => {
   try {
-    let posts = await Post.find({}).sort({ _id: -1 });
+    let posts = await Post.find({}, { "likes._id": 0 }).sort({ _id: -1 });
     return posts;
   } catch (error) {}
 };
 
 module.exports.likePost = async (postId, userId) => {
   try {
-    let post = await Post.findOne({ _id: postId, likes: { userId } });
+    let post = await Post.findOne({ _id: postId, "likes.userId": userId });
     if (post) {
       result = await Post.findByIdAndUpdate(postId, {
         $pull: { likes: { userId } }
@@ -110,9 +110,12 @@ module.exports.likePost = async (postId, userId) => {
 module.exports.addComment = async (comment, eventId, author) => {
   try {
     comment.author = author;
+    comment.date = Date.now();
+    console.log(comment);
     let result = Event.findByIdAndUpdate(eventId, {
       $push: { comments: comment }
     });
+    return result;
   } catch (error) {
     throw error;
   }

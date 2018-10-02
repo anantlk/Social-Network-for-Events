@@ -20,10 +20,7 @@ const commentSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
-  author: {
-    type: mongoose.Schema.ObjectId,
-    ref: "user"
-  },
+  author: String,
   date: Date
 });
 
