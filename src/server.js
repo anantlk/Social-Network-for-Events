@@ -17,23 +17,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// var uri =
-//   "mongodb://" +
-//   process.env.mongoUser +
-//   ":" +
-//   process.env.mongoPass +
-//   "@ds163510.mlab.com:63510/hooknotes";
-// var db = mongoose.connect(uri);
+var uri =
+  "mongodb://" +
+  process.env.mongoUser +
+  ":" +
+  process.env.mongoPass +
+  "@ds163510.mlab.com:63510/hooknotes";
+var db = mongoose.connect(uri);
 
-mongoose
-  .connect("mongodb://localhost/IWP")
-  .then(res => {
-    console.log("Connected To Database");
-  })
-  .catch(err => {
-    console.log(err);
-    console.log("Connection failed");
-  });
+// mongoose
+//   .connect("mongodb://localhost/IWP")
+//   .then(res => {
+//     console.log("Connected To Database");
+//   })
+//   .catch(err => {
+//     console.log(err);
+//     console.log("Connection failed");
+//   });
 
 app.use(session({ secret: "IWP events portal" }));
 app.use(passport.initialize());

@@ -9,7 +9,6 @@ router.use(isLoggedIn);
 router.get("/view-post", async (req, res, next) => {
   try {
     let user = JSON.stringify({ userId: req.user.id });
-    console.log(req.user.id);
     let obj = [];
     let posts = await database.viewPost();
     posts.forEach(post => {
@@ -18,7 +17,6 @@ router.get("/view-post", async (req, res, next) => {
         likes = JSON.stringify(post.likes);
         post.liked = likes.indexOf(user) > -1 ? true : false;
         obj.push(post);
-        console.log(post);
       }
     });
     res.json({ success: true, posts: obj });

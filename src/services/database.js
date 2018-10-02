@@ -36,6 +36,15 @@ module.exports.getEventForUsers = async id => {
   }
 };
 
+module.exports.getOrganization = async () => {
+  try {
+    let chapters = await users.find({ role: "organization" });
+    return chapters;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports.getEventForOrganization = async id => {
   try {
     let events = await Event.find(

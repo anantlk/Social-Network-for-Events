@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const isLoggedIn = require("../../utilities/authenticate");
 const userType = require("../../utilities/userType");
-const User = require("../../models/user");
-const Events = require("../../models/events");
 const database = require("../../services/database");
 
 router.use(isLoggedIn);
