@@ -11,8 +11,24 @@ const organiserSchema = new mongoose.Schema({
   }
 });
 
+const commentSchema = new mongoose.Schema({
+  rating: {
+    type: Number,
+    default: 5
+  },
+  comment: {
+    type: String,
+    default: ""
+  },
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: "user"
+  },
+  date: Date
+});
+
 const eventSchema = new mongoose.Schema({
-  eventId: {
+  orgId: {
     type: mongoose.Schema.ObjectId,
     ref: "user"
   },
@@ -52,6 +68,7 @@ const eventSchema = new mongoose.Schema({
     type: Number,
     default: 5
   },
+  comments: [commentSchema],
   registeredUsers: [
     {
       id: {

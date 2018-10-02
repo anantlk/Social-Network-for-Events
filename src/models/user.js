@@ -23,7 +23,7 @@ var userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ["Male", "Female", "Others", null],
+    enum: ["Male", "Female", "Others", ""],
     default: ""
   },
   phone: {
@@ -33,7 +33,7 @@ var userSchema = new mongoose.Schema({
   photo: String,
   role: {
     type: String,
-    enum: ["student", "chapter", "admin"],
+    enum: ["student", "organization", "admin"],
     default: "student"
   },
   domain: {
