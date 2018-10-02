@@ -17,13 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-var uri =
+let uri =
   "mongodb://" +
-  process.env.mongoUser +
+  process.env.MONGO_USER +
   ":" +
-  process.env.mongoPass +
-  "@ds163510.mlab.com:63510/hooknotes";
-var db = mongoose.connect(uri);
+  process.env.MONGO_PASS +
+  "@ds121203.mlab.com:21203/iwp-project";
+
+let db = mongoose.connect(uri);
 
 // mongoose
 //   .connect("mongodb://localhost/IWP")
