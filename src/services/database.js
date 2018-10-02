@@ -1,5 +1,6 @@
 const Event = require("../models/events");
 const Post = require("../models/posts");
+const User = require("../models/user");
 
 module.exports.getAllEvents = async () => {
   try {
@@ -36,9 +37,9 @@ module.exports.getEventForUsers = async id => {
   }
 };
 
-module.exports.getOrganization = async () => {
+module.exports.getOrganizations = async () => {
   try {
-    let chapters = await users.find({ role: "organization" });
+    let chapters = await User.find({ role: "organization" });
     return chapters;
   } catch (error) {
     throw error;
