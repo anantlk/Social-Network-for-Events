@@ -91,14 +91,14 @@ module.exports.viewPost = async () => {
 
 module.exports.likePost = async (postId, userId) => {
   try {
-    let post = await Post.findOne({ _id: postId, $in: { likes: userId } });
+    let post = await Post.findOne({ _id: postId, likes: { userId } });
     if (post) {
-      let result = await Post.findByIdAndUpdate(postId, {
-        $pull: { likes: userId }
+      result = await Post.findByIdAndUpdate(postId, {
+        $pull: { likes: { userId } }
       });
     } else {
-      let result = await Post.findByIdAndUpdate(postId, {
-        $push: { likes: userId }
+      result = await Post.findByIdAndUpdate(postId, {
+        $push: { likes: { userId } }
       });
     }
     return result;

@@ -10,9 +10,9 @@ router.get("/view-post", async (req, res, next) => {
   try {
     let posts = await database.viewPost();
     posts.forEach(post => {
-      likes.indexOf(req.user.id) > -1
-        ? (post.liked = true)
-        : (post.liked = false);
+      if (post.likes) {
+        post.liked = post.likes.indexOf(req.user.id) > -1 ? true : false;
+      }
     });
     res.json({ success: true, posts });
   } catch (error) {

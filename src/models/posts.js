@@ -12,10 +12,14 @@ const postSchema = new mongoose.Schema(
       ref: "user"
     },
     imgUrl: String,
-    likes: {
-      type: mongoose.Schema.ObjectId,
-      ref: "user"
-    },
+    likes: [
+      {
+        userId: {
+          type: mongoose.Schema.ObjectId,
+          ref: "user"
+        }
+      }
+    ],
     event: {
       type: mongoose.Schema.ObjectId,
       ref: "event"
