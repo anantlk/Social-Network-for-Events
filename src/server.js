@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const passport = require("passport");
+var proxy = require("express-http-proxy");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const index = require("./routes/api/index");
@@ -36,6 +37,21 @@ let db = mongoose.connect(uri);
 //     console.log("Connection failed");
 //   });
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+  );
+  if ("OPTIONS" == req.method) {
+    res.send(200);
+  } else {
+    next();
+  }
+});
+
 app.use(session({ secret: "IWP events portal" }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -43,6 +59,7 @@ app.use(flash());
 
 require("./config/passport")(passport);
 
+app.use("/api", proxy("localhost:4200"));
 app.use("/api", index);
 app.use("/api/admin", admin);
 
