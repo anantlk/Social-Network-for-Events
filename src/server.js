@@ -18,11 +18,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public/index.html'));
+// });
 
 let uri =
   "mongodb://" +
@@ -65,7 +65,6 @@ app.use(flash());
 
 require("./config/passport")(passport);
 
-app.use("/api", proxy("localhost:4200"));
 app.use("/api", index);
 app.use("/api/admin", admin);
 

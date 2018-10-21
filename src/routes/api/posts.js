@@ -3,10 +3,14 @@ const router = express.Router();
 const isLoggedIn = require("../../utilities/authenticate");
 const userType = require("../../utilities/userType");
 const database = require("../../services/database");
+const cors = require('./cors');
 
 router.use(isLoggedIn);
 
-router.get("/view-post", async (req, res, next) => {
+router.route("/view-post")
+// .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+.get( async (req, res, next) => {
+  console.log(req.headers);
   try {
     let user = JSON.stringify({ userId: req.user.id });
     let obj = [];
