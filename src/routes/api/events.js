@@ -6,13 +6,6 @@ const database = require("../../services/database");
 
 router.use(isLoggedIn);
 
-router.get("/all", async (req, res, next) => {
-  try {
-    let events = await database.getAllEvents();
-    res.json({ success: true, events });
-  } catch (error) {}
-});
-
 router.get("/:eventId", async (req, res, next) => {
   try {
     let events = await database.getEventById(req.params.eventId);

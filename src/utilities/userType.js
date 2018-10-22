@@ -11,3 +11,10 @@ module.exports.isOrganization = (req, res, next) => {
   }
   return next();
 };
+
+module.exports.isFaculty = (req, res, next) => {
+  if (req.user.role !== "faculty") {
+    return next(new Error("Not a Faculty"));
+  }
+  return next();
+};

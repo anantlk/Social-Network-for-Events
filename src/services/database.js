@@ -1,6 +1,9 @@
 const Event = require("../models/events");
 const Post = require("../models/posts");
 const User = require("../models/user");
+const Student = require("../models/student");
+const Organization = require("../models/organization");
+const Faculty = require("../models/faculty");
 
 module.exports.getAllEvents = async () => {
   try {
@@ -9,6 +12,13 @@ module.exports.getAllEvents = async () => {
   } catch (error) {
     throw error;
   }
+};
+
+module.exports.getStudent = async userId => {
+  console.log(userId);
+  let user = await Student.findOne({ userId: userId }).populate("userId");
+  if (!user) throw new Error("User Not Found");
+  return user;
 };
 
 module.exports.addEvent = async (event, id) => {
@@ -129,4 +139,13 @@ module.exports.addComment = async (comment, eventId, author) => {
   } catch (error) {
     throw error;
   }
+};
+
+module.exports.addSkill = async (skill, userId) => {
+  let result = await Student.updateOne(
+    { userId: userId },
+    { $push: { skills: skill } }
+  );
+  if (!result.ok) throw new Error("Skill could not be added");
+  return result;
 };

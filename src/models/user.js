@@ -11,20 +11,12 @@ var userSchema = new mongoose.Schema({
   email: {
     type: String
   },
-  regNo: {
-    type: String
-  },
   description: {
     type: String,
     default: ""
   },
   password: {
     type: String
-  },
-  gender: {
-    type: String,
-    enum: ["Male", "Female", "Others", ""],
-    default: ""
   },
   phone: {
     type: String,
@@ -33,17 +25,8 @@ var userSchema = new mongoose.Schema({
   photo: String,
   role: {
     type: String,
-    enum: ["student", "organization", "admin"],
+    enum: ["student", "organization", "faculty"],
     default: "student"
-  },
-  domain: {
-    type: String,
-    default: ""
-  },
-  skills: [],
-  preferences: {
-    type: String,
-    default: ""
   }
 });
 
@@ -55,4 +38,4 @@ userSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("user", userSchema);

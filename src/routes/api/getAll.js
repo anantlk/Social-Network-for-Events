@@ -14,4 +14,11 @@ router.get("/chapters", async (req, res, next) => {
   }
 });
 
+router.get("/events", async (req, res, next) => {
+  try {
+    let events = await database.getAllEvents();
+    res.json({ success: true, events });
+  } catch (error) {}
+});
+
 module.exports = router;

@@ -18,30 +18,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, "/public")));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public/index.html'));
-// });
+// let uri =
+//   "mongodb://" +
+//   process.env.MONGO_USER +
+//   ":" +
+//   process.env.MONGO_PASS +
+//   "@ds121203.mlab.com:21203/iwp-project";
 
-let uri =
-  "mongodb://" +
-  process.env.MONGO_USER +
-  ":" +
-  process.env.MONGO_PASS +
-  "@ds121203.mlab.com:21203/iwp-project";
+// let db = mongoose.connect(uri);
 
-let db = mongoose.connect(uri);
-
-// mongoose
-//   .connect("mongodb://localhost/IWP")
-//   .then(res => {
-//     console.log("Connected To Database");
-//   })
-//   .catch(err => {
-//     console.log(err);
-//     console.log("Connection failed");
-//   });
+mongoose
+  .connect("mongodb://localhost/IWP")
+  .then(res => {
+    console.log("Connected To Database");
+  })
+  .catch(err => {
+    console.log(err);
+    console.log("Connection failed");
+  });
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);

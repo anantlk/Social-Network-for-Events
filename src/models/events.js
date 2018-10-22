@@ -1,16 +1,5 @@
 const mongoose = require("mongoose");
 
-const organiserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    default: ""
-  },
-  photo: {
-    type: String,
-    deafult: ""
-  }
-});
-
 const commentSchema = new mongoose.Schema({
   rating: {
     type: Number,
@@ -37,9 +26,9 @@ const eventSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
-  organiser: organiserSchema,
+  organiser: String,
   price: {
-    type: Number,
+    type: String,
     default: ""
   },
   tagLine: {
@@ -52,6 +41,9 @@ const eventSchema = new mongoose.Schema({
   },
   eventDate: {
     type: Date
+  },
+  eventTime: {
+    type: String
   },
   venue: {
     type: String,
@@ -68,9 +60,13 @@ const eventSchema = new mongoose.Schema({
   comments: [commentSchema],
   registeredUsers: [
     {
-      id: {
+      userId: {
         type: mongoose.Schema.ObjectId,
         ref: "user"
+      },
+      attended: {
+        type: Boolean,
+        default: false
       }
     }
   ]

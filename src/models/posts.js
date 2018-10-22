@@ -6,12 +6,12 @@ const postSchema = new mongoose.Schema(
     date: {
       type: Date
     },
+    tagLine: String,
     description: String,
     owner: {
       type: mongoose.Schema.ObjectId,
       ref: "user"
     },
-    imgUrl: String,
     likes: [
       {
         userId: {
@@ -20,7 +20,7 @@ const postSchema = new mongoose.Schema(
         }
       }
     ],
-    event: {
+    eventId: {
       type: mongoose.Schema.ObjectId,
       ref: "event"
     }
