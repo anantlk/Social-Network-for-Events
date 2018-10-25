@@ -7,18 +7,28 @@ const database = require("../../services/database");
 router.use(isLoggedIn);
 router.use(userType.isOrganization);
 
-router.get("/details", (req, res, next) => {
+router.post("/add-event", async (req, res, next) => {
   try {
-    res.json({ success: true, user: req.user });
+    let result = await database.addEvent(req.body, req.user.id);
+    res.json({ success: true });
   } catch (error) {
     return next(error);
   }
 });
 
-router.post("/add-event", async (req, res, next) => {
+router.post("/:eventId/post-attendance", (req, res, next) => {
   try {
-    let result = await database.addEvent(req.body, req.user.id);
-    res.json({ success: true });
+    result = database.postAttendance(req.params.eventId, req.body, req.user.id);
+    res.json({ success: true, result });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/details", async (req, res, next) => {
+  try {
+    let organization = await database.getOrganizationById(req.user.id);
+    res.json({ success: true, organization });
   } catch (error) {
     return next(error);
   }

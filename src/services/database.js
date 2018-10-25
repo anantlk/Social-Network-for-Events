@@ -96,6 +96,12 @@ module.exports.getEventById = async id => {
 
 module.exports.eventRegister = async (userId, eventId) => {
   try {
+    let registeredUser = await Event.findOne({
+      "registeredUsers.userId": userId
+    });
+    if (registeredUser) {
+      throw new Error("User Already Registered");
+    }
     let result = await Event.findByIdAndUpdate(eventId, {
       $push: { registeredUsers: { userId: userId } }
     });
@@ -177,4 +183,24 @@ module.exports.getRegisteredUsers = async (eventId, orgId) => {
   }).populate("registeredUsers.userId", "name");
   if (!result) throw new Error("No such event for the organization!");
   return result.registeredUsers;
+};
+
+module.exports.postAttendance = async (eventId, users, orgId) => {
+  let event = Event.findOne({ $and: [{ orgId: orgId }, { _id: eventId }] });
+  if (!event) {
+    throw new Error("Not authenticated user!");
+  }
+  console.log(users);
+  let result = await Promise.all(
+    users.map(async user => {
+      return await Event.updateOne(
+        {
+          "registeredUsers.userId": user.userId
+        },
+        { $set: { "registeredUsers.$.attended": user.attended } }
+      );
+    })
+  );
+  console.log(result);
+  return result;
 };

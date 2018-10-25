@@ -15,6 +15,23 @@ router.get("/event-id/:eventId", async (req, res, next) => {
   }
 });
 
+router.get("/organization-id/:organizationId", async (req, res, next) => {
+  try {
+    let events = await database.getEventForOrganization(
+      req.params.organizationId
+    );
+    console.log(events);
+    upcomingEvents = events.filter(event => {
+      console.log(event.eventDate);
+      return event.eventDate > Date.now();
+    });
+    conductedEvents = events.filter(event => event.eventDate < Date.now());
+    res.json({ success: true, upcomingEvents, conductedEvents });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 router.post(
   "/:eventId/register",
   userType.isStudent,
@@ -47,20 +64,15 @@ router.post("/:eventId/comment", userType.isStudent, async (req, res, next) => {
   }
 });
 
-router.get("/:eventId/registered-users", async (req, res) => {
-  try {
-    if (req.user.role === "student") {
-      throw new Error("Cannot be accessed by student!");
-    }
-    let users = await database.getRegisteredUsers(
-      req.params.eventId,
-      req.user.id
-    );
-    console.log(users);
-    res.json({ success: true, users });
-  } catch (error) {
-    return next(error);
-  }
+router.get("/popularity/:eventId", async (req, res, next) => {
+  let event = await database.getEventById(req.params.eventId);
+  let rating = 0;
+  event.comments.forEach(comment => {
+    console.log(comment);
+    rating += comment.rating;
+  });
+  rating = rating / event.comments.length;
+  res.json({ success: true, rating: rating });
 });
 
 module.exports = router;

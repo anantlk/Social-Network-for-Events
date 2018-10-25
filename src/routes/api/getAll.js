@@ -21,4 +21,9 @@ router.get("/events", async (req, res, next) => {
   } catch (error) {}
 });
 
+router.get("/role", async (req, res, next) => {
+  try {
+    res.json({ success: true, role: req.user.role });
+  } catch (error) {}
+});
 module.exports = router;

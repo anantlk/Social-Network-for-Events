@@ -5,30 +5,53 @@ const database = require("../../../services/database");
 
 router.use(isLoggedIn);
 
-router.get("/:chapterId", async (req, res, next) => {
+router.get("/:organizationId", async (req, res, next) => {
   try {
-    let organization = await database.getOrganizationById(req.params.chapterId);
+    let organization = await database.getOrganizationById(
+      req.params.organizationId
+    );
     res.json({ success: true, organization });
   } catch (error) {
     return next(error);
   }
 });
 
-router.get("/events/:organizationId", async (req, res, next) => {
+router.get("/:eventId/registered-users", async (req, res) => {
   try {
-    let events = await database.getEventForOrganization(
-      req.params.organizationId
+    if (req.user.role === "student") {
+      throw new Error("Cannot be accessed by student!");
+    }
+    let users = await database.getRegisteredUsers(
+      req.params.eventId,
+      req.user.id
     );
-    console.log(events);
-    upcomingEvents = events.filter(event => {
-      console.log(event.eventDate);
-      return event.eventDate > Date.now();
-    });
-    conductedEvents = events.filter(event => event.eventDate < Date.now());
-    res.json({ success: true, upcomingEvents, conductedEvents });
+    console.log(users);
+    res.json({ success: true, users });
   } catch (error) {
     return next(error);
   }
+});
+
+router.get("/popularity/:organizationId", async (req, res, next) => {
+  let events = await database.getAllEvents(req.params.organizationId);
+  let rating = 5;
+  if (events.length) {
+    rating = 0;
+    events.forEach(event => {
+      tempRating = 0;
+      if (event.comments.length) {
+        event.comments.forEach(comment => {
+          console.log(comment);
+          tempRating += comment.rating;
+        });
+        rating = tempRating / event.comments.length;
+      }
+      // console.log(tempRating);
+      // console.log(rating);
+    });
+    rating = rating / events.length;
+  }
+  res.json({ success: true, rating: rating });
 });
 
 module.exports = router;
