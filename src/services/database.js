@@ -49,7 +49,7 @@ module.exports.getEventForUsers = async id => {
 
 module.exports.getOrganizations = async () => {
   try {
-    let chapters = await User.find({ role: "organization" });
+    let chapters = await Organization.find({}).populate("userId");
     return chapters;
   } catch (error) {
     throw error;
@@ -62,9 +62,24 @@ module.exports.getEventForOrganization = async id => {
       {
         orgId: id
       },
-      { registeredUsers: 0, registeredCount: 0 }
+      { registeredUsers: 0 }
     );
     return events;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports.getOrganizationById = async id => {
+  try {
+    console.log("In org by id");
+    let organization = await Organization.findOne(
+      {
+        userId: id
+      },
+      { registeredUsers: 0, registeredCount: 0 }
+    ).populate("userId");
+    return organization;
   } catch (error) {
     throw error;
   }
@@ -82,7 +97,7 @@ module.exports.getEventById = async id => {
 module.exports.eventRegister = async (userId, eventId) => {
   try {
     let result = await Event.findByIdAndUpdate(eventId, {
-      $push: { registeredUsers: { id: userId } }
+      $push: { registeredUsers: { userId: userId } }
     });
     console.log(result);
     return result;
@@ -116,12 +131,13 @@ module.exports.likePost = async (postId, userId) => {
       result = await Post.findByIdAndUpdate(postId, {
         $pull: { likes: { userId } }
       });
+      return false;
     } else {
       result = await Post.findByIdAndUpdate(postId, {
         $push: { likes: { userId } }
       });
+      return true;
     }
-    return result;
   } catch (error) {
     throw error;
   }
@@ -148,4 +164,17 @@ module.exports.addSkill = async (skill, userId) => {
   );
   if (!result.ok) throw new Error("Skill could not be added");
   return result;
+};
+
+module.exports.getEventById = async id => {
+  let result = await Event.findOne({ _id: id }, { registeredUsers: 0 });
+  return result;
+};
+
+module.exports.getRegisteredUsers = async (eventId, orgId) => {
+  let result = await Event.findOne({
+    $and: [{ orgId: orgId }, { _id: eventId }]
+  }).populate("registeredUsers.userId", "name");
+  if (!result) throw new Error("No such event for the organization!");
+  return result.registeredUsers;
 };

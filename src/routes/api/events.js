@@ -6,10 +6,10 @@ const database = require("../../services/database");
 
 router.use(isLoggedIn);
 
-router.get("/:eventId", async (req, res, next) => {
+router.get("/event-id/:eventId", async (req, res, next) => {
   try {
-    let events = await database.getEventById(req.params.eventId);
-    res.json({ success: true, events });
+    let event = await database.getEventById(req.params.eventId);
+    res.json({ success: true, event });
   } catch (error) {
     return next(error);
   }
@@ -46,4 +46,21 @@ router.post("/:eventId/comment", userType.isStudent, async (req, res, next) => {
     return next(error);
   }
 });
+
+router.get("/:eventId/registered-users", async (req, res) => {
+  try {
+    if (req.user.role === "student") {
+      throw new Error("Cannot be accessed by student!");
+    }
+    let users = await database.getRegisteredUsers(
+      req.params.eventId,
+      req.user.id
+    );
+    console.log(users);
+    res.json({ success: true, users });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

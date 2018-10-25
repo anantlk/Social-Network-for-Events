@@ -38,7 +38,6 @@ module.exports = passport => {
               let newUser = new User(req.body);
               let role = req.body.role;
               newUser.password = newUser.generateHash(password);
-              newUser.name = req.body.firstname + " " + req.body.lastname;
               newUser.role = role;
               let result = await newUser.save();
               if (role === "student") {

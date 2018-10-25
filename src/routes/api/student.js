@@ -18,24 +18,19 @@ router.get("/details", async (req, res, next) => {
   }
 });
 
-router.get("/registered-events", async (req, res) => {
+router.get("/events", async (req, res) => {
   let events = await Events.find(
     {
-      "registeredUsers.id": req.user.id
+      "registeredUsers.userId": req.user.id
     },
     {
       registeredUsers: 0,
       registeredCount: 0
     }
   );
-  events = events.filter(event => event.eventDate > Date.now());
-  res.json({ success: true, events });
-});
-
-router.get("/attended-events", async (req, res) => {
-  let events = await database.getEventForUsers(req.body.id);
-  events = events.filter(event => event.eventDate < Date.now());
-  res.json({ success: true, events });
+  registeredEvents = events.filter(event => event.eventDate > Date.now());
+  attendedEvents = events.filter(event => event.eventDate < Date.now());
+  res.json({ success: true, registeredEvents, attendedEvents });
 });
 
 router.post("/add-skill", async (req, res, next) => {

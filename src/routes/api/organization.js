@@ -24,28 +24,4 @@ router.post("/add-event", async (req, res, next) => {
   }
 });
 
-router.get("/upcoming-events", async (req, res, next) => {
-  try {
-    let events = await database.getEventForOrganization(req.user.id);
-    console.log(events);
-    events = events.filter(event => {
-      console.log(event.eventDate);
-      return event.eventDate > Date.now();
-    });
-    res.json({ success: true, events });
-  } catch (error) {
-    return next(error);
-  }
-});
-
-router.get("/conducted-events", async (req, res) => {
-  try {
-    let events = await database.getEventForOrganization(req.user.id);
-    events = events.filter(event => event.eventDate < Date.now());
-    res.json({ success: true, events });
-  } catch (error) {
-    return next(error);
-  }
-});
-
 module.exports = router;
