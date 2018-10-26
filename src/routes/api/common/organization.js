@@ -18,6 +18,7 @@ router.get("/:organizationId", async (req, res, next) => {
 
 router.get("/:eventId/registered-users", async (req, res) => {
   try {
+    let result = [];
     if (req.user.role === "student") {
       throw new Error("Cannot be accessed by student!");
     }
@@ -25,6 +26,15 @@ router.get("/:eventId/registered-users", async (req, res) => {
       req.params.eventId,
       req.user.id
     );
+    users.forEach(user => {
+      let obj = {
+        userId: user.userId._id,
+        name: user.userId.name,
+        attended: user.attended
+      };
+      result.push(obj);
+    });
+    users = result;
     console.log(users);
     res.json({ success: true, users });
   } catch (error) {

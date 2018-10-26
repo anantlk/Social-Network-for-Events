@@ -34,4 +34,19 @@ router.get("/details", async (req, res, next) => {
   }
 });
 
+router.get("/get-feedback", async (req, res, next) => {
+  try {
+    let result = await database.getFeedback(req.user.id);
+    console.log(result);
+    // result = JSON.parse(JSON.stringify(result));
+    console.log(result.feedback);
+    res.json({
+      success: true,
+      feedbacks: result.feedback
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

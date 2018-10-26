@@ -97,7 +97,7 @@ module.exports.getEventById = async id => {
 module.exports.eventRegister = async (userId, eventId) => {
   try {
     let registeredUser = await Event.findOne({
-      "registeredUsers.userId": userId
+      $and: [{ "registeredUsers.userId": userId }, { _id: eventId }]
     });
     if (registeredUser) {
       throw new Error("User Already Registered");
@@ -193,12 +193,13 @@ module.exports.postAttendance = async (eventId, users, orgId) => {
   console.log(users);
   let result = await Promise.all(
     users.map(async user => {
-      return await Event.updateOne(
+      result = await Event.updateOne(
         {
-          "registeredUsers.userId": user.userId
+          $and: [{ _id: eventId }, { "registeredUsers.userId": user.userId }]
         },
         { $set: { "registeredUsers.$.attended": user.attended } }
       );
+      console.log(result);
     })
   );
   console.log(result);
@@ -214,5 +215,10 @@ module.exports.postFeedback = async (orgId, userId, data) => {
     { userId: orgId },
     { $push: { feedback: data } }
   );
+  return result;
+};
+
+module.exports.getFeedback = async orgId => {
+  let result = await Organization.findOne({ userId: orgId });
   return result;
 };
