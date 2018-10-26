@@ -54,4 +54,19 @@ router.get("/popularity/:organizationId", async (req, res, next) => {
   res.json({ success: true, rating: rating });
 });
 
+router.post("/:organizationId/feedback", async (req, res, next) => {
+  try {
+    if (req.user.id === req.params.organizationId)
+      throw new Error("Invalid Request!");
+    let organization = await database.postFeedback(
+      req.params.organizationId,
+      req.user.id,
+      req.body
+    );
+    res.json({ success: true, organization });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

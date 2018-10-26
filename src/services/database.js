@@ -204,3 +204,15 @@ module.exports.postAttendance = async (eventId, users, orgId) => {
   console.log(result);
   return result;
 };
+
+module.exports.postFeedback = async (orgId, userId, data) => {
+  console.log(data);
+  data = JSON.parse(JSON.stringify(data));
+  data.userId = userId;
+  console.log(data);
+  let result = await Organization.updateOne(
+    { userId: orgId },
+    { $push: { feedback: data } }
+  );
+  return result;
+};
