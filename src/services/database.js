@@ -14,6 +14,16 @@ module.exports.getAllEvents = async () => {
   }
 };
 
+module.exports.getEmail = async userId => {
+  let user = await User.findOne({ _id: userId });
+  return user.email;
+};
+
+module.exports.getPhone = async userId => {
+  let user = await User.findOne({ _id: userId });
+  return user.phone;
+};
+
 module.exports.getStudent = async userId => {
   console.log(userId);
   let user = await Student.findOne({ userId: userId }).populate("userId");
@@ -199,7 +209,7 @@ module.exports.postAttendance = async (eventId, users, orgId) => {
         },
         { $set: { "registeredUsers.$.attended": user.attended } }
       );
-      console.log(result);
+      // console.log(result);
     })
   );
   console.log(result);

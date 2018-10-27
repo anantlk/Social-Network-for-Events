@@ -18,6 +18,7 @@ router.post("/add-event", async (req, res, next) => {
 
 router.post("/:eventId/post-attendance", (req, res, next) => {
   try {
+    console.log(req.body);
     result = database.postAttendance(req.params.eventId, req.body, req.user.id);
     res.json({ success: true, result });
   } catch (error) {
@@ -40,6 +41,18 @@ router.get("/get-feedback", async (req, res, next) => {
     console.log(result);
     // result = JSON.parse(JSON.stringify(result));
     console.log(result.feedback);
+    let feedbacks = result.feedback;
+    await Promise.all(
+      feedbacks.map(async feedback => {
+        if (feedback.contactMethod === "Email") {
+          feedback.email = await database.getEmail(feedback.userId);
+        }
+        if (feedback.contactMethod === "Tel") {
+          feedback.phone = await database.getPhone(feedback.userId);
+        }
+        return feedback;
+      })
+    );
     res.json({
       success: true,
       feedbacks: result.feedback
