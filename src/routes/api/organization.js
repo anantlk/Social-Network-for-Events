@@ -39,23 +39,24 @@ router.get("/get-feedback", async (req, res, next) => {
   try {
     let result = await database.getFeedback(req.user.id);
     console.log(result);
-    // result = JSON.parse(JSON.stringify(result));
-    console.log(result.feedback);
-    let feedbacks = result.feedback;
+    var feedbacks = result.feedback;
     await Promise.all(
-      feedbacks.map(async feedback => {
+      feedbacks.map(async (feedback, index) => {
+        feedback = JSON.parse(JSON.stringify(feedback));
         if (feedback.contactMethod === "Email") {
           feedback.email = await database.getEmail(feedback.userId);
         }
         if (feedback.contactMethod === "Tel") {
           feedback.phone = await database.getPhone(feedback.userId);
         }
+        console.log(feedback);
+        feedbacks[index] = feedback;
         return feedback;
       })
     );
     res.json({
       success: true,
-      feedbacks: result.feedback
+      feedbacks
     });
   } catch (error) {
     return next(error);

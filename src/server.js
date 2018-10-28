@@ -32,9 +32,9 @@ app.use(express.static(path.join(__dirname, "/public")));
 // mongoose
 //   .connect("mongodb://localhost/IWP")
 mongoose
-  .connect("mongodb://localhost:27017/iwp")
-// mongoose
-//   .connect("mongodb://04mayukh:04mayukh@ds143603.mlab.com:43603/iwp")
+  .connect("mongodb://localhost:27017/IWP")
+  // mongoose
+  //   .connect("mongodb://04mayukh:04mayukh@ds143603.mlab.com:43603/iwp")
   .then(res => {
     console.log("Connected To Database");
   })
@@ -42,9 +42,6 @@ mongoose
     console.log(err);
     console.log("Connection failed");
   });
-
-  
-
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
@@ -71,10 +68,9 @@ require("./config/passport")(passport);
 app.use("/api", index);
 app.use("/api/admin", admin);
 
-
-app.get('*', function (req, res) {
-  res.redirect('localhost:3000');
-  console.log("hihi")
+app.get("*", function(req, res) {
+  res.redirect("localhost:3000");
+  console.log("hihi");
 });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -93,6 +89,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({ success: false, message: err.message });
 });
-
 
 module.exports = app;

@@ -24,6 +24,13 @@ module.exports.getPhone = async userId => {
   return user.phone;
 };
 
+// module.exports.getUser = async userId => {
+//   let user = await User.findOne({ _id: userId });
+//   if (!user) {
+//     throw new Error("User not found!");
+//   }
+//   return user;
+// };
 module.exports.getStudent = async userId => {
   console.log(userId);
   let user = await Student.findOne({ userId: userId }).populate("userId");
@@ -135,7 +142,9 @@ module.exports.addPost = async (post, orgId) => {
 
 module.exports.viewPost = async () => {
   try {
-    let posts = await Post.find({}, { "likes._id": 0 }).sort({ _id: -1 });
+    let posts = await Post.find({}, { "likes._id": 0 })
+      .sort({ _id: -1 })
+      .populate("owner", "name");
     return posts;
   } catch (error) {}
 };
