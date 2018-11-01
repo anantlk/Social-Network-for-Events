@@ -1,5 +1,1 @@
-# IWP Project
-
-##Reminders
-
-1.Get events for chapters
+# Social Network For Events
